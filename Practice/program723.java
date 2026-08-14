@@ -1,0 +1,70 @@
+import java.io.*;
+import java.util.*;
+
+class program723
+{
+    public static void main(String A[]) throws Exception
+    {       
+        Scanner sobj = new Scanner(System.in);
+        String FolderName = null;
+        String PackFileName = null;
+        String header = null;
+        int iRet=0;
+
+        FileOutputStream foobj = null;
+        FileInputStream fiobj = null;
+
+        System.out.println("Enter Folder name : ");
+        FolderName = sobj.nextLine();
+
+        System.out.println("Enter the name of packed file : ");
+        PackFileName = sobj.nextLine();
+        
+        File fobjfolder = new File(FolderName);
+
+        if((fobjfolder.exists()) && (fobjfolder.isDirectory()))
+        {
+            System.out.println("Folder exists");
+
+            File fobjpack = new File(PackFileName);
+            fobjpack.createNewFile();   // Pack file gets created
+
+            foobj = new FileOutputStream(fobjpack);
+
+            File fArr[] = fobjfolder.listFiles();
+         
+            System.out.println("Number of files in folder : "+fArr.length);
+                
+            byte Buffer[] = new byte[1024];
+
+            for(int i = 0; i < fArr.length; i++)
+            {
+                fiobj = new FileInputStream(fArr[i]);
+
+                System.out.println("Name of the file : "+fArr[i].getName()); 
+
+                System.out.println(fArr[i].length());
+
+                // Write file name and Size
+                
+                System.out.println("Size of the file : "+fArr[i].length()); 
+                
+                // Loop to read from fiobj & write to foobj
+
+                /*while((iRet=fiobj.read(Buffer))!=-1)
+                {
+                    foobj.write(Buffer,0,iRet);
+                }*/
+
+                fiobj.read();
+                fiobj.close();
+            }
+            foobj.close();
+            sobj.close();
+        }
+        else
+        {
+            System.out.println("There is no such folder");
+        }
+    }
+}
